@@ -1,0 +1,41 @@
+#
+# Generic
+#
+
+# PIDs
+*.pid
+*.seed
+*.pid.lock
+pids
+
+# File manager configs
+.directory
+Thumbs.db
+.DS_Store
+
+# Build directory
+dist/
+
+# tmp files
+temp/
+tmp/
+
+# Logs
+logs/
+*.log
+
+# Archives
+*.zip
+*.tar.gz
+*.tar.xz
+*.tar
+*.tgz
+
+# dotenv
+.env
+.env.*
+!.env.example
+
+# SQLite DB
+*.db
+*.db-journal
