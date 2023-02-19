@@ -1,0 +1,63 @@
+name: GitHub Actions
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+      EMAIL: ${{ secrets.EMAIL }}
+
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get install gcc dpkg-dev gpg
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - run: npm ci
+      - run: ./build.sh
+
+      - name: Upload repository as artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: public
+
+  deploy:
+    if: github.event_name == 'push' && github.ref_name == 'main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Deploy to GitHub Pages # This deploys artifact uploaded by upload-pages-artifact
+        id: deployment
+        uses: actions/deploy-pages@v1
