@@ -24,6 +24,9 @@ pids
 .directory
 Thumbs.db
 
+# dotenv
+.env
+
 #
 # JavaScript
 #

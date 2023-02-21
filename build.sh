@@ -5,6 +5,10 @@ set -eu
 # Check dependencies
 type node > /dev/null
 
+if [[ -f ".env" ]]; then
+  export $(grep --invert-match "^#" .env | xargs)
+fi
+
 # Check if secrets are set
 : "${GPG_PRIVATE_KEY:?GPG_PRIVATE_KEY is not defined}"
 : "${GPG_PUBLIC_KEY:?GPG_PUBLIC_KEY is not defined}"
