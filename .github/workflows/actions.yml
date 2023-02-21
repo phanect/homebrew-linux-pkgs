@@ -46,6 +46,7 @@ jobs:
       - run: ./build.sh
 
       - name: Upload repository as artifact
+        if: github.ref_name == 'main' # This process is not required on feature branches
         uses: actions/upload-pages-artifact@v1
         with:
           path: public
