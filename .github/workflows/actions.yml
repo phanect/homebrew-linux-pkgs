@@ -25,6 +25,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
@@ -51,6 +52,7 @@ jobs:
     if: github.event_name == 'push' && github.ref_name == 'main'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
