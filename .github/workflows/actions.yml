@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron:  "27 18 * * *" # Run at 18:27 UTC (3:27 JST) everyday
 
 permissions: {}
   # contents: read
@@ -46,12 +48,13 @@ jobs:
       - run: ./build.sh
 
       - name: Upload repository as artifact
+        if: github.ref_name == 'main' # This process is not required on feature branches
         uses: actions/upload-pages-artifact@v1
         with:
           path: public
 
   deploy:
-    if: github.event_name == 'push' && github.ref_name == 'main'
+    if: github.ref_name == 'main'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
