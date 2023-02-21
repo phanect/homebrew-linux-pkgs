@@ -13,7 +13,7 @@ on:
     branches:
       - main
   schedule:
-    - cron:  "27 18 * * *" # Run at 18:27 everyday
+    - cron:  "27 18 * * *" # Run at 18:27 UTC (3:27 JST) everyday
 
 permissions:
   contents: read
