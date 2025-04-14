@@ -1,0 +1,2 @@
+bin/brew usr/bin/
+lib/version.txt usr/lib/homebrew/

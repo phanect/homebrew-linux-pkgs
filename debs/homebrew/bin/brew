@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -eu
+
+export HOMEBREW_LINUX=1
+HOMEBREW_DIR="${HOME}/.local/share/homebrew"
+
+if [[ ! -f "${HOMEBREW_DIR}/bin/brew" ]]; then
+  echo "Setting up homebrew..."
+
+  HOMEBREW_VERSION="$(cat "/usr/lib/homebrew/version.txt")"
+  TAR_DIR="$(mktemp -d)"
+  EXTRACTED_DIR="$(mktemp -d)"
+
+  curl -sSL --output "${TAR_DIR}/homebrew.tar.gz" \
+    "https://github.com/Homebrew/brew/archive/refs/tags/${HOMEBREW_VERSION}.tar.gz"
+
+  tar xf "${TAR_DIR}/homebrew.tar.gz" --directory="${EXTRACTED_DIR}"
+  rm -rf "${TAR_DIR}"
+
+  rm -rf "${HOMEBREW_DIR}"
+  mv "${EXTRACTED_DIR}/$(ls ${EXTRACTED_DIR} | grep brew-*)" "${HOMEBREW_DIR}"
+
+  echo "Homebrew set up successfully completed!"
+fi
+
+exec "${HOMEBREW_DIR}/bin/brew" "$@"

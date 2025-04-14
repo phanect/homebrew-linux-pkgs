@@ -1,4 +1,10 @@
 #
+# Project-specific
+#
+/debs/homebrew/debian/homebrew/
+/debs/homebrew/lib/version.txt
+
+#
 # Generic
 #
 
@@ -39,3 +45,16 @@ logs/
 # SQLite DB
 *.db
 *.db-journal
+
+#
+# Debs
+#
+/debs/*/debian/.debhelper/
+/debs/*/debian/files
+/debs/*/debian/debhelper-build-stamp
+/debs/*/debian/*.substvars
+/debs/**/*.build
+/debs/**/*.buildinfo
+/debs/**/*.changes
+/debs/**/*.deb
+/debs/**/*.dsc
