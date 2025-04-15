@@ -1,0 +1,8 @@
+-s dir
+-t deb
+--license BSD-2-Clause
+--architecture all
+--depends build-essential --depends procps --depends curl --depends file --depends git
+--description "The missing package manager for Linux and macOS"
+--url "https://brew.sh"
+--maintainer "Jumpei Ogawa <git@phanective.org>"

@@ -47,6 +47,11 @@ logs/
 *.db-journal
 
 #
+# Ruby
+#
+vendor/
+
+#
 # Debs
 #
 /debs/*/debian/.debhelper/
