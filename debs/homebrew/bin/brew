@@ -21,6 +21,9 @@ if [[ ! -f "${HOMEBREW_DIR}/bin/brew" ]]; then
   rm -rf "${HOMEBREW_DIR}"
   mv "${EXTRACTED_DIR}/$(ls ${EXTRACTED_DIR} | grep brew-*)" "${HOMEBREW_DIR}"
 
+  mkdir -p "${HOMEBREW_DIR}/etc/homebrew"
+  cp /usr/lib/homebrew/home/brew.env "${HOMEBREW_DIR}/etc/homebrew/brew.env"
+
   echo "Homebrew set up successfully completed!"
 fi
 
