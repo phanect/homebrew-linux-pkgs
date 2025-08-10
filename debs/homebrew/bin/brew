@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eu
+
+export HOMEBREW_LINUX=1
+export HOMEBREW_PATH="/usr/lib/homebrew"
+
+exec "${HOMEBREW_PATH}/bin/brew" "$@"

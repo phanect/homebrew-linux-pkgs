@@ -55,7 +55,8 @@ find "${HOMEBREW_ROOT}" -type f -name ".ruby-version" -exec rm -f "{}" \;
 # Some +.rb files have execution permission, and it causes lintian error.
 find "${HOMEBREW_ROOT}" -type f -name "*.rb" -exec chmod -x "{}" \;
 
-cp --recursive "${PROJECT_ROOT}/debs/homebrew/debian" "${BUILD_ROOT}/"
+# Copy $PROJECT_ROOT/debs/homebrew/* under $BUILD_ROOT/
+find "${PROJECT_ROOT}/debs/homebrew" -mindepth 1 -maxdepth 1 -exec cp --recursive "{}" "${BUILD_ROOT}/" \;
 
 # mkdir --parents "${HOMEBREW_ROOT}/usr/bin"
 # ln --symbolic "/usr/lib/homebrew/bin/brew" "${HOMEBREW_ROOT}/usr/bin/brew"
