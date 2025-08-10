@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: sudo apt-get install gcc dpkg-dev gpg
+        run: sudo apt-get install build-essential debhelper devscripts dpkg-dev git-buildpackage gpg
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:

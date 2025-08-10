@@ -20,6 +20,7 @@ logs
 pids
 
 # Archives
+*.tar.gz
 *.tgz
 
 # File manager configs

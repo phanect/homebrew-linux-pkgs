@@ -1,0 +1,18 @@
+Source: homebrew
+Section: devel
+Priority: optional
+Maintainer: Jumpei Ogawa <git@phanective.org>
+Standards-Version: 4.6.1
+Rules-Requires-Root: no
+Homepage: https://brew.sh
+Vcs-Git: https://github.com/Homebrew/brew.git
+Vcs-Browser: https://github.com/Homebrew/brew
+Build-Depends: debhelper-compat (= 13), procps, file
+
+Package: homebrew
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Missing Package Manager for Linux (and originally macOS)
+ Homebrew is the easiest and most flexible way to install the UNIX tools
+ not packaged for your Linux distribution without requiring sudo.
