@@ -5,4 +5,6 @@ set -eu
 export HOMEBREW_LINUX=1
 export HOMEBREW_PATH="/usr/lib/homebrew"
 
+mkdir -p /tmp/homebrew
+
 exec "${HOMEBREW_PATH}/bin/brew" "$@"
