@@ -6,8 +6,9 @@ export HOMEBREW_LINUX=1
 
 HOMEBREW_VERSION="$(cat "/usr/lib/homebrew/homebrew-version.txt")"
 PKG_VERSION="$(cat "/usr/lib/homebrew/package-version.txt")"
-HOMEBREW_ALL_VERSIONS_DIR="${HOME}/.local/share/homebrew"
-HOMEBREW_DIR="${HOMEBREW_ALL_VERSIONS_DIR}/${PKG_VERSION}"
+HOMEBREW_ROOT="${HOME}/.local/share/homebrew"
+HOMEBREW_VERSIONS_DIR="${HOMEBREW_ROOT}/versions"
+HOMEBREW_DIR="${HOMEBREW_VERSIONS_DIR}/${PKG_VERSION}"
 
 if [[ ! -f "${HOMEBREW_DIR}/bin/brew" ]]; then
   echo "Setting up homebrew..."
@@ -20,12 +21,12 @@ if [[ ! -f "${HOMEBREW_DIR}/bin/brew" ]]; then
 
   tar xf "${TAR_DIR}/homebrew.tar.gz" --directory="${EXTRACTED_DIR}"
 
-  rm -rf "${HOMEBREW_ALL_VERSIONS_DIR}"
-  mkdir -p "${HOMEBREW_ALL_VERSIONS_DIR}"
+  rm -rf "${HOMEBREW_VERSIONS_DIR}"
+  mkdir -p "${HOMEBREW_VERSIONS_DIR}"
   mv "${EXTRACTED_DIR}/$(ls ${EXTRACTED_DIR} | grep brew-*)" "${HOMEBREW_DIR}"
 
-  mkdir -p "${HOMEBREW_DIR}/etc/homebrew"
-  echo "HOMEBREW_CELLAR=\"${HOMEBREW_DIR}/Cellar\"" | tee "${HOMEBREW_DIR}/etc/homebrew/brew.env"
+  mkdir -p "${HOMEBREW_ROOT}/shared/cellar"
+  ln --symbolic "${HOMEBREW_ROOT}/shared/cellar" "${HOMEBREW_DIR}/Cellar"
 
   rm -rf "${TAR_DIR}"
   echo "Homebrew set up successfully completed!"
