@@ -1,5 +1,9 @@
 # Homebrew Linux packages
 
+> [!WARNING]
+> WIP. Installing this package may break your system.
+> Only the package developer (@phanect) is expected to install this package for development purpose currently.
+
 Currently, only deb package is available.
 
 ## Install
