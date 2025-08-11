@@ -4,12 +4,9 @@ set -eux
 
 DIRNAME="$(realpath "$(dirname  -- "${BASH_SOURCE[0]}")")"
 PROJECT_ROOT="$(realpath "${DIRNAME}/..")"
+WORKSPACE_DIR="${PROJECT_ROOT}/debs/homebrew"
 
-function get-homebrew-version() {
-  dpkg --info "$@" | grep --only-matching --perl-regexp "^ Version: \K[0-9\.]+$"
-}
-
-HOMEBREW_VERSION="$(get-homebrew-version "${PROJECT_ROOT}/debs/homebrew_*.deb")"
+HOMEBREW_VERSION="$(dpkg-parsechangelog --show-field Version --file "${WORKSPACE_DIR}/debian/changelog")"
 
 if gh release view "${HOMEBREW_VERSION}"; then
   echo "Homebrew ${HOMEBREW_VERSION} already released. Exiting..."
