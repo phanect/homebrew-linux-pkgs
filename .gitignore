@@ -2,7 +2,8 @@
 # Project-specific
 #
 /debs/homebrew/debian/homebrew/
-/debs/homebrew/usr/lib/version.txt
+/debs/homebrew/usr/lib/homebrew-version.txt
+/debs/homebrew/usr/lib/package-version.txt
 
 #
 # Generic
