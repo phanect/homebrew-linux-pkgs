@@ -1,0 +1,58 @@
+name: GitHub Actions
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  schedule:
+    - cron:  "27 3 * * *" # Run at 3:27 UTC (12:27 JST) everyday
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build deb package
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: install system deps
+        run: sudo apt-get install build-essential debhelper devscripts dpkg-dev
+      - uses: actions/checkout@v4
+
+      - name: build deb package
+        run: ./scripts/build-deb.sh
+
+      - name: test installation
+        run: |
+          sudo dpkg -i ./debs/homebrew_*.deb
+          sudo apt-get install -f
+          brew --version
+
+      - name: upload deb
+        uses: actions/upload-artifact@v5
+        with:
+          name: deb
+          path: ./debs/homebrew_*.deb
+
+  publish:
+    name: release deb
+    if: github.ref_name == 'main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: download deb
+        uses: actions/download-artifact@v5
+        with:
+          name: deb
+          path: .
+
+      - name: create Release
+        run: |
+          ./scripts/release.sh
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
