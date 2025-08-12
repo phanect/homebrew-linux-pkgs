@@ -1,0 +1,1 @@
+sudo brew install pinact などと sudo でインストールする方式に変更する?
