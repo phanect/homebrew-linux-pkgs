@@ -1,0 +1,95 @@
+name: brew
+title: Homebrew
+version: "4.6.14"
+summary: The missing package manager for macOS (or Linux)
+description: |
+  The missing package manager for macOS (or Linux)
+license: BSD-2-Clause
+website: https://brew.sh
+source-code: https://github.com/phanect/homebrew-linux-pkgs
+issues: https://github.com/phanect/homebrew-linux-pkgs/issues
+
+grade: devel # TODO replace with "stable"
+confinement: devmode # TODO use 'classic' or "strict" once you have the right plugs and slots
+
+platforms:
+  amd64:
+  # arm64:
+  # armhf:
+  # ppc64el:
+  # riscv64:
+  # s390x:
+
+base: core24
+
+parts:
+  brew:
+    source: "https://github.com/Homebrew/brew.git"
+    source-type: git
+    source-tag: "4.6.14"
+
+    stage-snaps:
+      - "ruby/3.4/stable"
+    stage-packages:
+      - curl
+      - git
+
+    plugin: dump
+    override-pull: |
+      craftctl default
+      rm -rf \
+        "${CRAFT_PART_SRC}/**/.rubocop.yml" \
+        "${CRAFT_PART_SRC}/.devcontainer/" \
+        "${CRAFT_PART_SRC}/.git/" \
+        "${CRAFT_PART_SRC}/.github/" \
+        "${CRAFT_PART_SRC}/.sublime/" \
+        "${CRAFT_PART_SRC}/.vscode/" \
+        "${CRAFT_PART_SRC}/Library/Homebrew/test/" \
+        "${CRAFT_PART_SRC}/Library/Homebrew/test_bot/" \
+        "${CRAFT_PART_SRC}/.dockerignore" \
+        "${CRAFT_PART_SRC}/.editorconfig" \
+        "${CRAFT_PART_SRC}/.gitignore" \
+        "${CRAFT_PART_SRC}/.shellcheckrc" \
+        "${CRAFT_PART_SRC}/.vale.ini" \
+        "${CRAFT_PART_SRC}/AGENTS.md" \
+        "${CRAFT_PART_SRC}/CODEOWNERS" \
+        "${CRAFT_PART_SRC}/CONTRIBUTING.md" \
+        "${CRAFT_PART_SRC}/Dockerfile"
+
+  # brew:
+  #   plugin: dump
+  #   source: ./misc
+  #   source-type: local
+  #   stage-snaps:
+  #     - "ruby/3.4/stable"
+  #   stage-packages:
+  #     - curl
+  #     - git
+
+apps:
+  brew:
+    command: bin/brew
+    plugs:
+      - home
+      - network
+      - network-bind
+      - process-control
+      - user-config
+    environment:
+      # HOMEBREW_CURL_PATH: ${SNAP}/usr/bin/curl
+      HOMEBREW_GIT_PATH: ${SNAP}/usr/bin/git
+
+  # brew:
+  #   command: tetete
+  #   plugs:
+  #     - home
+  #     - network
+  #     - network-bind
+  #     - process-control
+  #     - user-config
+
+plugs:
+  user-config:
+    interface: personal-files
+    write:
+      - $HOME/.local/share/homebrew

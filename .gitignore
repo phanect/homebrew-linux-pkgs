@@ -39,3 +39,8 @@ logs/
 # SQLite DB
 *.db
 *.db-journal
+
+#
+# Snaps
+#
+*.snap

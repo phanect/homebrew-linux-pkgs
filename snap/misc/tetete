@@ -1,0 +1,5 @@
+#!/bin/bash -pu
+set -eu
+
+curl --version
+curl -O https://tmp.guildkit.net/canvaai/guildkit_icon_tmp.png
